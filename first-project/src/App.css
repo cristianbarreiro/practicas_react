@@ -62,13 +62,13 @@
     display: block;
 }
 
-.tw-followCard-button:hover.is-following:hover {
-    background-color: rgba(80, 8, 8, 0.1);
-    color: red;
-    border: 1px solid rgba(255, 0, 0, 0.1);
-    transition: .3s ease all;
-}
-
 .tw-followCard-stopFollowing {
     display: none;
+}
+
+.tw-followCard-button:hover.is-following:hover {
+    background-color: rgba(80, 8, 8, 0.1);
+    color: rgb(255, 59, 59);
+    border: 1px solid rgba(255, 0, 0, 0.747);
+    transition: .3s ease all;
 }

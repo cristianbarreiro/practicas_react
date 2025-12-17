@@ -7,7 +7,7 @@ export function TwitterFollowCard({ children, userName, initialIsFollowing}) {
     const altText = `El avatar de ${children}`
     // Estado del botón de seguir
     const [isFollowing, setIsFollowing] = useState(initialIsFollowing)
-    const text = isFollowing ? 'Dejar de seguir' : 'Seguir'
+    const text = isFollowing ? 'Siguiendo' : 'Seguir'
     const buttonClassName = isFollowing ?
         'tw-followCard-button is-following' :
         'tw-followCard-button'
