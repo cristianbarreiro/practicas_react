@@ -1,4 +1,3 @@
-import { useSate } from 'react'
 import './App.css'
 import { TwitterFollowCard } from './TwitterFollowCard'
 
