@@ -7,7 +7,6 @@ const TURNS = {
     O: 'O'
 }
 
-
 const Square = ({ children, isSelected, updateBoard, index }) => {
     const className = `square ${isSelected ? 'is-selected' : ''}`;
 
@@ -21,8 +20,6 @@ const Square = ({ children, isSelected, updateBoard, index }) => {
         </div>
     );
 }
-
-
 
 function App() {
     const [board] = useState(
