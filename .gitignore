@@ -35,3 +35,8 @@ coverage/
 .eslintcache
 .cache/
 .turbo/
+
+# Dependencias y archivos de bloqueo
+
+package-lock.json
+
