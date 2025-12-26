@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import "./App.css";
 
 const CAT_RANDOM_FACT_URL = "https://catfact.ninja/fact";
 
 export function App() {
   const [fact, setFact] = useState();
+  const [imageUrl, setImageUrl] = useState();
 
   //   useEffect(() => {
   //     fetch(CAT_RANDOM_FACT_URL)
@@ -23,6 +25,16 @@ export function App() {
     // console.log(firstWord);
     const threeFirstWords = fact?.split(" ").slice(0, 3).join(" "); // el signo de interrogación es para que no de error si fact es undefined
     // console.log(threeFirstWords);
+    fetch(
+      `https://cataas.com/cat/says/${encodeURIComponent(
+        threeFirstWords
+      )}?size=50&color=red&json=true`
+    )
+      .then((res) => res.json())
+      .then((response) => {
+        const { url } = response;
+        setImageUrl(url);
+      });
   }, []);
 
   //     useEffect(() => {
@@ -47,7 +59,15 @@ export function App() {
   return (
     <main>
       <h1> App de Gatitos </h1>
-      <p>{fact && <span>{fact}</span>}</p>
+      <section>
+        <p>{fact && <span>{fact}</span>}</p>
+        {imageUrl && (
+          <img
+            src={imageUrl}
+            alt={`image extracted using the first three words for ${fact}`}
+          />
+        )}
+      </section>
     </main>
   );
 }
