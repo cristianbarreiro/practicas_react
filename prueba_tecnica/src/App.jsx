@@ -1,35 +1,13 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import { getRandomFact } from "./services/fact.js";
+import { useCatImage } from "./hooks/useCatImage.js";
+import { useCatFact } from "./hooks/useCatFact.js";
+import { Otro } from "./Components/Otro.jsx";
 
 const CAT_PREFIX_IMAGE_URL = "https://cataas.com";
 
-function useCatImage({ fact }) {
-  const [imageUrl, setImageUrl] = useState();
-
-  useEffect(() => {
-    if (!fact) return;
-
-    const threeFirstWords = fact?.split(" ").slice(0, 3).join(" "); // el signo de interrogación es para que no de error si fact es undefined
-
-    fetch(
-      `https://cataas.com/cat/says/${encodeURIComponent(
-        threeFirstWords
-      )}?size=50&color=red&json=true`
-    )
-      .then((res) => res.json())
-      .then((response) => {
-        console.log(response);
-        const { url } = response;
-        setImageUrl(url);
-      });
-  }, [fact]);
-
-  return { imageUrl }
-}
-
 export function App() {
-  const [fact, setFact] = useState();
+  const { fact, refreshFact } = useCatFact();
   const { imageUrl } = useCatImage({ fact });
 
   //   useEffect(() => {
@@ -38,31 +16,23 @@ export function App() {
   //       .then((data) => setFact(data.fact));
   //   }, []);
 
-  useEffect(() => {
-    (async () => {
-      const fact = await getRandomFact();
-      setFact(fact);
-    })();
-
-    // const firstWord = fact?.split(" ")[0];
-    // console.log(firstWord);
-    // const threeFirstWords = fact?.split(" ").slice(0, 3).join(" "); // el signo de interrogación es para que no de error si fact es undefined
-    // console.log(threeFirstWords);
-    // fetch(
-    //   `https://cataas.com/cat/says/${encodeURIComponent(
-    //     threeFirstWords
-    //   )}?size=50&color=red&json=true`
-    // )
-    //   .then((res) => res.json())
-    //   .then((response) => {
-    //     const { url } = response;
-    //     setImageUrl(url);
-    //   });
-  }, []);
+  // const firstWord = fact?.split(" ")[0];
+  // console.log(firstWord);
+  // const threeFirstWords = fact?.split(" ").slice(0, 3).join(" "); // el signo de interrogación es para que no de error si fact es undefined
+  // console.log(threeFirstWords);
+  // fetch(
+  //   `https://cataas.com/cat/says/${encodeURIComponent(
+  //     threeFirstWords
+  //   )}?size=50&color=red&json=true`
+  // )
+  //   .then((res) => res.json())
+  //   .then((response) => {
+  //     const { url } = response;
+  //     setImageUrl(url);
+  //   });
 
   const handleClick = async () => {
-    const fact = await getRandomFact();
-    setFact(fact);
+    refreshFact();
   };
 
   //     useEffect(() => {
@@ -98,6 +68,7 @@ export function App() {
           />
         )}
       </section>
+      <Otro />
     </main>
   );
 }
