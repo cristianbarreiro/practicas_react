@@ -1,46 +1,11 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import { getRandomFact } from "./services/fact.js";
 
-const CAT_RANDOM_FACT_URL = "https://catfact.ninja/fact";
+const CAT_PREFIX_IMAGE_URL = "https://cataas.com";
 
-export function App() {
-  const [fact, setFact] = useState();
+function useCatImage({ fact }) {
   const [imageUrl, setImageUrl] = useState();
-  const [factError, setFactError] = useState();
-
-  //   useEffect(() => {
-  //     fetch(CAT_RANDOM_FACT_URL)
-  //       .then((response) => response.json())
-  //       .then((data) => setFact(data.fact));
-  //   }, []);
-
-  useEffect(() => {
-    async function getRandomFact() {
-      const response = await fetch(CAT_RANDOM_FACT_URL);
-      if (!response.ok) {
-        // Puedes lanzar un error o manejarlo aquí
-        throw new Error("Error en la petición");
-      }
-      const data = await response.json();
-      setFact(data.fact);
-    }
-    getRandomFact();
-
-    // const firstWord = fact?.split(" ")[0];
-    // console.log(firstWord);
-    // const threeFirstWords = fact?.split(" ").slice(0, 3).join(" "); // el signo de interrogación es para que no de error si fact es undefined
-    // console.log(threeFirstWords);
-    // fetch(
-    //   `https://cataas.com/cat/says/${encodeURIComponent(
-    //     threeFirstWords
-    //   )}?size=50&color=red&json=true`
-    // )
-    //   .then((res) => res.json())
-    //   .then((response) => {
-    //     const { url } = response;
-    //     setImageUrl(url);
-    //   });
-  }, []);
 
   useEffect(() => {
     if (!fact) return;
@@ -59,6 +24,46 @@ export function App() {
         setImageUrl(url);
       });
   }, [fact]);
+
+  return { imageUrl }
+}
+
+export function App() {
+  const [fact, setFact] = useState();
+  const { imageUrl } = useCatImage({ fact });
+
+  //   useEffect(() => {
+  //     fetch(CAT_RANDOM_FACT_URL)
+  //       .then((response) => response.json())
+  //       .then((data) => setFact(data.fact));
+  //   }, []);
+
+  useEffect(() => {
+    (async () => {
+      const fact = await getRandomFact();
+      setFact(fact);
+    })();
+
+    // const firstWord = fact?.split(" ")[0];
+    // console.log(firstWord);
+    // const threeFirstWords = fact?.split(" ").slice(0, 3).join(" "); // el signo de interrogación es para que no de error si fact es undefined
+    // console.log(threeFirstWords);
+    // fetch(
+    //   `https://cataas.com/cat/says/${encodeURIComponent(
+    //     threeFirstWords
+    //   )}?size=50&color=red&json=true`
+    // )
+    //   .then((res) => res.json())
+    //   .then((response) => {
+    //     const { url } = response;
+    //     setImageUrl(url);
+    //   });
+  }, []);
+
+  const handleClick = async () => {
+    const fact = await getRandomFact();
+    setFact(fact);
+  };
 
   //     useEffect(() => {
   //     async function getRandomFact() {
@@ -82,6 +87,8 @@ export function App() {
   return (
     <main>
       <h1> App de Gatitos </h1>
+
+      <button onClick={handleClick}>Get new fact</button>
       <section>
         <p>{fact && <span>{fact}</span>}</p>
         {imageUrl && (
