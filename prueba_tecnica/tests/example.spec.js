@@ -32,3 +32,5 @@ test('app shows random fact and image', async ({ page }) => {
   await expect(textContent?.length).toBeGreaterThan(0);
   await expect(imageSrc?.startsWith(CAT_PREFIX_IMAGE_URL)).toBeTruthy();
 });
+
+// TODO: Testear que al hacer click en el botón de "Get new fact" se obtiene un nuevo hecho y una nueva imagen
